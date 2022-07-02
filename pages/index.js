@@ -1,12 +1,22 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import Image from "next/image";
 import { Box, ListItemButton, Grid, List, ListItem } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  // MuiListItemButton-
+  root: {
+    "&$selected": {
+      backgroundColor: "red",
+    },
+  },
+  selected: {},
+}));
 
 export default function Home() {
   const [data, setData] = useState([]);
+  const classes = useStyles();
   const [visible, setVisibility] = useState({
     id: 1,
     image:
@@ -28,13 +38,12 @@ export default function Home() {
     <>
       <Head>
         <title>Movie List | Home</title>
-        <meta name="keywords" content="ninjas" />
       </Head>
       <Grid container style={{ border: "1px solid black" }}>
         <Grid className={styles.header} item xs={12}>
           Movie Catalogue
         </Grid>
-        <Grid item xs={6} padding="10px">
+        <Grid item md={6} xs={12} padding="10px">
           <img
             src={visible.image}
             alt="This is Image"
@@ -63,11 +72,16 @@ export default function Home() {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={6} className={styles.leftArea}>
+        <Grid item md={6} xs={12} className={styles.leftArea}>
           <List>
             {data.map((movie, index) => {
               return (
-                <ListItem disablePadding key={index}>
+                <ListItem
+                  classes={{ root: classes.root, selected: classes.selected }}
+                  selected={visible.id == movie.id}
+                  disablePadding
+                  key={index}
+                >
                   <ListItemButton
                     selected={movie.id == visible.id}
                     onClick={() => {
