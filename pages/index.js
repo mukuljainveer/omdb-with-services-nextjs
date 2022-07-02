@@ -7,7 +7,15 @@ import { Box, ListItemButton, Grid, List, ListItem } from "@mui/material";
 
 export default function Home() {
   const [data, setData] = useState([]);
-  const [visible, setVisibility] = useState({});
+  const [visible, setVisibility] = useState({
+    id: 1,
+    image:
+      "https://m.media-amazon.com/images/M/MV5BODJkZTZhMWItMDI3Yy00ZWZlLTk4NjQtOTI1ZjU5NjBjZTVjXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_FMjpg_UX1000_.jpg",
+    director: "Mark Osborne",
+    caste: "Jack Black, Jackie Chen",
+    genere: "Action, Comedy",
+    name: "Kung Fu Panda",
+  });
 
   useEffect(async () => {
     const res = await fetch("/api/movies");
@@ -19,23 +27,27 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Ninja List | Home</title>
+        <title>Movie List | Home</title>
         <meta name="keywords" content="ninjas" />
       </Head>
-      <Grid container>
+      <Grid container style={{ border: "1px solid black" }}>
         <Grid className={styles.header} item xs={12}>
-          Movie Catlog
+          Movie Catalogue
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} padding="10px">
           <img
             src={visible.image}
             alt="This is Image"
             style={{ width: "100%" }}
           />
-          <Box>
-            <Box display="flex">
-              <Box fontWeight="bold">Name: &nbsp;</Box>
-              <Box>{visible.name} </Box>
+          <Box display="flex" alignItems="center" flexDirection="column">
+            <Box
+              display="flex"
+              data-testid="movie-name"
+              fontSize="22px"
+              fontWeight="bold"
+            >
+              {visible.name}
             </Box>
             <Box display="flex">
               <Box fontWeight="bold">Director: &nbsp;</Box>
